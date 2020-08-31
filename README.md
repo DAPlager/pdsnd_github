@@ -1,15 +1,15 @@
 ### Date created
-Include the date you created this project and README file.
+2020-08-30
 
-### Project Title
-Replace the Project Title
+### Project title
+pdsnd_github
 
 ### Description
-Describe what your project is about and what it does
+This project takes comma-separated value (.csv) bikeshare data from various cities and outputs either unfiltered or filtered bikeshare usage statistics.
 
 ### Files used
-Include the files used
+* specifically-formatted .csv file(s) of bikeshare data within 'csv_data' directory
+* bikeshare_2.py python script file
 
 ### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
-
+Udacity's Programming for Data Science with Python nanodegree [Udacity](https://www.udacity.com/).
