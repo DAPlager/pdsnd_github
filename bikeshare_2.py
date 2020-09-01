@@ -11,8 +11,6 @@ Description:    This script uses specifically formatted comma-separated value
 import time
 import pandas as pd
 import numpy as np
-# QUESTION: Was there a particular use of the NumPy package that I should
-# have employed below??
 import sys
 
 CITY_DATA = { 'chicago': 'chicago.csv',
@@ -31,10 +29,8 @@ def get_filters():
     print('Hello! Let\'s explore some US bikeshare data!')
 
     # Get user input for city (chicago, new york city, washington).
-    # HINT: Use a while loop to handle invalid inputs.
     city_tuple = ('chicago', 'new york city', 'washington')
-    flag1 = True   # NOTE: I used this "flag" approach because my understanding
-                   # is that a 'while True:' - 'break' approach is less desirable.
+    flag1 = True
 
     while flag1:
         city = input("Please enter the name of the CITY whose data you want" +
@@ -146,11 +142,6 @@ def time_stats(df):
     start_time = time.time()
 
     # For converting month_mode number and day_mode number to corresponding string name.
-
-# QUESTION: Presumably could just make a single global 'months' and a single
-# global 'weekdays' tuple, both containing an 'all' value, for use in multiple
-# functions, correct?
-
     months = ('january', 'february', 'march', 'april', 'may', 'june')
     weekdays = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
 
