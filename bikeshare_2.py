@@ -4,9 +4,11 @@ import pandas as pd
 # have employed below??
 import sys
 
-CITY_DATA = { 'chicago': 'chicago.csv',
-              'new york city': 'new_york_city.csv',
-              'washington': 'washington.csv' }
+# This CITY_DATA dictionary is setup to access .csv files within the 'csv_data'
+# subdirectory that is within the same directory as this bikeshare_2.py file.
+CITY_DATA = { 'chicago': './csv_data/chicago.csv',
+              'new york city': './csv_data/new_york_city.csv',
+              'washington': './csv_data/washington.csv' }
 
 def get_filters():
     """
