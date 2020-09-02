@@ -10,6 +10,10 @@ CITY_DATA = { 'chicago': './csv_data/chicago.csv',
               'new york city': './csv_data/new_york_city.csv',
               'washington': './csv_data/washington.csv' }
 
+# Global 'months' and 'weekdays' tuples that are locally used more than once below.
+months = ('january', 'february', 'march', 'april', 'may', 'june')
+weekdays = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -112,7 +116,6 @@ def load_data(city, month, day):
     # Filter by month if applicable.
     if month != 'all':
         # Use the index of the months list to get the corresponding int.
-        months = ('january', 'february', 'march', 'april', 'may', 'june')
         month_num = months.index(month) + 1
 
         # Boolean indexing to filter by month to create the new dataframe.
@@ -121,7 +124,6 @@ def load_data(city, month, day):
     # Filter by day of week if applicable.
     if day != 'all':
         # Use the index of the weekdays tuple to get the corresponding int.
-        weekdays = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
         weekday_num = weekdays.index(day)
 
         # Boolean indexing to filter by day of week to create the new dataframe.
@@ -142,8 +144,6 @@ def time_stats(df):
 # global 'weekdays' tuple, both containing an 'all' value, for use in multiple
 # functions, correct?
 
-    months = ('january', 'february', 'march', 'april', 'may', 'june')
-    weekdays = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
 
     # Display the most common month.
     month_mode = df['month'].mode()[0]
