@@ -1,6 +1,5 @@
 import time
 import pandas as pd
-import numpy as np   
 # QUESTION: Was there a particular use of the NumPy package that I should
 # have employed below??
 import sys
@@ -19,21 +18,21 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('Hello! Let\'s explore some US bikeshare data!')
-    
-    # Get user input for city (chicago, new york city, washington). 
+
+    # Get user input for city (chicago, new york city, washington).
     # HINT: Use a while loop to handle invalid inputs.
     city_tuple = ('chicago', 'new york city', 'washington')
     flag1 = True   # NOTE: I used this "flag" approach because my understanding
                    # is that a 'while True:' - 'break' approach is less desirable.
-    
+
     while flag1:
-        city = input("Please enter the name of the CITY whose data you want" + 
+        city = input("Please enter the name of the CITY whose data you want" +
                      "\nto analyze (chicago, new york city, or washington): ")
         city = city.lower()
-        
+
         if city == 'exit':
             sys.exit()
-        
+
         if city not in city_tuple:
             print("\nPlease try again or enter 'exit'.")
         else:
@@ -42,15 +41,15 @@ def get_filters():
     # Get user input for month (all, january, february, ... , june).
     month_tuple = ('all', 'january', 'february', 'march', 'april', 'may', 'june')
     flag2 = True
-    
+
     while flag2:
-        month = input("If desired, enter the name of one specific MONTH (january to june only)" + 
+        month = input("If desired, enter the name of one specific MONTH (january to june only)" +
                      "\nwhose data you want to limit your analysis to; otherwise, enter 'all': ")
         month = month.lower()
-        
+
         if month == 'exit':
             sys.exit()
-        
+
         if month not in month_tuple:
             print("\nPlease try again or enter 'exit'.")
         else:
@@ -59,15 +58,15 @@ def get_filters():
     # Get user input for day of week (all, monday, tuesday, ... sunday).
     weekday_tuple = ('all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
     flag3 = True
-    
+
     while flag3:
-        day = input("If desired, enter the name of one specific DAY of the week (monday to sunday)" + 
+        day = input("If desired, enter the name of one specific DAY of the week (monday to sunday)" +
                      "\nwhose data you want to limit your analysis to; otherwise, enter 'all': ")
         day = day.lower()
-        
+
         if day == 'exit':
             sys.exit()
-        
+
         if day not in weekday_tuple:
             print("\nPlease try again or enter 'exit'.")
         else:
@@ -88,7 +87,7 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    # Load data file into a dataframe. 
+    # Load data file into a dataframe.
     # NOTE: Could use 'try'-'except' in a 'while' Loop to handle missing .csv file.
     df = pd.read_csv(CITY_DATA[city])
 
@@ -101,19 +100,19 @@ def load_data(city, month, day):
 # NOTE: .dt.weekday_name caused an Error in my Spyder work environment.
 
 
-# QUESTION: Is there a concise Pandas function/method for converting a Pandas  
-# Dataframe column of numeric day values (i.e., 'day_of_week'; 0 = Monday,  
+# QUESTION: Is there a concise Pandas function/method for converting a Pandas
+# Dataframe column of numeric day values (i.e., 'day_of_week'; 0 = Monday,
 # 6 = Sunday) to their corresponding string day names?  Presumably, I could use
 # a 'for' Loop to accomplish this numeric to string day name conversion, but is
 # there any Pandas function that is more direct?
 
-    
+
     # Filter by month if applicable.
     if month != 'all':
         # Use the index of the months list to get the corresponding int.
         months = ('january', 'february', 'march', 'april', 'may', 'june')
         month_num = months.index(month) + 1
-    
+
         # Boolean indexing to filter by month to create the new dataframe.
         df = df[df['month'] == month_num]
 
@@ -122,7 +121,7 @@ def load_data(city, month, day):
         # Use the index of the weekdays tuple to get the corresponding int.
         weekdays = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
         weekday_num = weekdays.index(day)
-        
+
         # Boolean indexing to filter by day of week to create the new dataframe.
         df = df[df['day_of_week'] == weekday_num]
 
@@ -138,9 +137,9 @@ def time_stats(df):
     # For converting month_mode number and day_mode number to corresponding string name.
 
 # QUESTION: Presumably could just make a single global 'months' and a single
-# global 'weekdays' tuple, both containing an 'all' value, for use in multiple 
+# global 'weekdays' tuple, both containing an 'all' value, for use in multiple
 # functions, correct?
-    
+
     months = ('january', 'february', 'march', 'april', 'may', 'june')
     weekdays = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
 
@@ -161,7 +160,7 @@ def time_stats(df):
 
 
     # Display the most common start hour.
-    start_hr_mode = df['Start Time'].dt.hour.mode()[0]    
+    start_hr_mode = df['Start Time'].dt.hour.mode()[0]
     most_freq_start_hr = df['Start Time'].dt.hour.value_counts().max()
     print("Most frequent start hour: {}".format(start_hr_mode))
     print("Start hour count: {}".format(most_freq_start_hr))
@@ -178,63 +177,63 @@ def station_stats(df):
     start_time = time.time()
 
     # Display most commonly used start station.
-    most_popular_start = df['Start Station'].mode()[0]    
+    most_popular_start = df['Start Station'].mode()[0]
     most_popular_start_ct = df['Start Station'].value_counts().max()
     print("Most popular start station: {}".format(most_popular_start))
     print("Start station count: {}".format(most_popular_start_ct))
 
 
     # Display most commonly used end station.
-    most_popular_end = df['End Station'].mode()[0]    
+    most_popular_end = df['End Station'].mode()[0]
     most_popular_end_ct = df['End Station'].value_counts().max()
     print("Most popular end station: {}".format(most_popular_end))
     print("End station count: {}".format(most_popular_end_ct))
 
 
-    # Display most frequent combination of start station and end station trip.    
+    # Display most frequent combination of start station and end station trip.
 
     '''
     # Obtain counts of each Start-End Station combination (1st attempt).
     most_pop_trip_ct_df = df.groupby(['Start Station', 'End Station']).count()
-    print(type(most_pop_trip_ct_df))   
+    print(type(most_pop_trip_ct_df))
         # NOTE: Pandas 'DataFrame' returned w/ redundant counts of each Start-End
         # Station combination in all 11 columns.
     print("\nDataFrame form of .count():\n{}".format(most_pop_trip_ct_df))
-    
+
     # Obtain a Pandas Series of counts of each Start-End Station combination.
     most_pop_trip_ct_series = most_pop_trip_ct_df[0]   # KeyError: 0
     most_pop_trip_ct_series = most_pop_trip_ct_df[[0]]   # KeyError: "None of [Int64Index([0], dtype='int64')] are in the [columns]"
     most_pop_trip_ct_series = most_pop_trip_ct_df['Unnamed']   # KeyError: 'Unnamed'
     most_pop_trip_ct_df = df.groupby(['Start Station', 'End Station'])[0].count()  # KeyError: 'Column not found: 0'
     print("\nUnnamed column 0:\n{}".format(most_pop_trip_ct_series))
-    
-# QUESTION: Why am I unable to access the first 'Unnamed' (index 0) column via 
+
+# QUESTION: Why am I unable to access the first 'Unnamed' (index 0) column via
 # the above attempts??  If possible, please provide code that would return a
 # Pandas Series of the first 'Unnamed: 0' column of most_pop_trip_ct_df.
-    
+
     '''
-    
+
     # Obtain a Pandas Series of counts of each Start-End Station combination,
     # and identify the combination(s) with the maximum count value.
-    
+
     # NOTE: I chose 'Trip Duration' (no NaNs) in place of 'Unnamed: 0" column (see just above).
     # Pandas 'Series' of trip counts.
     trip_cts = df.groupby(['Start Station', 'End Station'])['Trip Duration'].count()
 
     # Maximum trip count int.
     most_pop_trip_max = trip_cts.max()
-    
+
     # Boolean indexing for trip(s) having the maximum trip count.
     most_pop_trip = trip_cts[trip_cts == most_pop_trip_max]
 
 
 # QUESTION: Will I run into trouble if more than one Start-End Station trip
 # tied with the maximum trip count??
-# Perhaps something comparable to the 
+# Perhaps something comparable to the
 # best_rated = book_ratings[(book_ratings == 5).any(axis = 1)]['Book Title'].values
 # example that returns a NumPy ndarray is more appropriate here??
-    
-    
+
+
     '''
     # Checking the data types and values of various objects.
     print(type(trip_cts))   # Pandas 'Series' of counts returned.
@@ -249,7 +248,7 @@ def station_stats(df):
 
     # Tuple Unpacking of the 1st element (index 0) of the "MultiIndex"-type
     # object returned from 'most_pop_trip.index[0]'.
-# QUESTION: Again, might the following only output one Start-End trip even if 
+# QUESTION: Again, might the following only output one Start-End trip even if
 # there were more than one trip having the maximum trip count?!
     start_station, end_station = most_pop_trip.index[0]
     print("\nMost popular trip:")
@@ -294,20 +293,20 @@ def user_stats(df):
         # Display counts of gender.
         gender_cts = df['Gender'].value_counts()
         print("\nCounts based on User Gender: \n{}".format(gender_cts))
-    
-    
+
+
         # Display earliest, most recent, and most common year of birth.
         earliest_yr = df['Birth Year'].min()
         latest_yr = df['Birth Year'].max()
         most_freq_yr = df['Birth Year'].mode()[0]
-        
+
         print("\nEarliest birth year: {}".format(int(earliest_yr)))
         print("\nLatest birth year: {}".format(int(latest_yr)))
         print("\nMost frequent birth year: {}".format(int(most_freq_yr)))
-    
+
     except KeyError:
         print("\nNo gender and/or birth year data available.")
-    
+
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -320,7 +319,7 @@ def main():
         print("\n   {}".format(city.title()))
         print("\n   Month(s) - {}".format(month.title()))
         print("\n   Day(s) of the Week - {}".format(day.title()))
-        
+
         df = load_data(city, month, day)
         flag4 = True
         while flag4:
@@ -335,11 +334,11 @@ def main():
                 flag4 = False
 
         time_stats(df)
-        
+
         station_stats(df)
-        
+
         trip_duration_stats(df)
-        
+
         user_stats(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
