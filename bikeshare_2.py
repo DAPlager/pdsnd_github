@@ -10,12 +10,17 @@ Description:    This script uses specifically formatted comma-separated value
 """
 import time
 import pandas as pd
-import numpy as np
 import sys
 
-CITY_DATA = { 'chicago': 'chicago.csv',
-              'new york city': 'new_york_city.csv',
-              'washington': 'washington.csv' }
+# This CITY_DATA dictionary is setup to access .csv files within the 'csv_data'
+# subdirectory that is within the same directory as this bikeshare_2.py file.
+CITY_DATA = { 'chicago': './csv_data/chicago.csv',
+              'new york city': './csv_data/new_york_city.csv',
+              'washington': './csv_data/washington.csv' }
+
+# Global 'months' and 'weekdays' tuples that are locally used more than once below.
+months = ('january', 'february', 'march', 'april', 'may', 'june')
+weekdays = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
 
 def get_filters():
     """
@@ -117,7 +122,6 @@ def load_data(city, month, day):
     # Filter by month if applicable.
     if month != 'all':
         # Use the index of the months list to get the corresponding int.
-        months = ('january', 'february', 'march', 'april', 'may', 'june')
         month_num = months.index(month) + 1
 
         # Boolean indexing to filter by month to create the new dataframe.
@@ -126,7 +130,6 @@ def load_data(city, month, day):
     # Filter by day of week if applicable.
     if day != 'all':
         # Use the index of the weekdays tuple to get the corresponding int.
-        weekdays = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
         weekday_num = weekdays.index(day)
 
         # Boolean indexing to filter by day of week to create the new dataframe.
@@ -142,9 +145,6 @@ def time_stats(df):
     start_time = time.time()
 
     # For converting month_mode number and day_mode number to corresponding string name.
-    months = ('january', 'february', 'march', 'april', 'may', 'june')
-    weekdays = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
-
     # Display the most common month.
     month_mode = df['month'].mode()[0]
     month_name = months[month_mode - 1]
